@@ -1,0 +1,16 @@
+{
+	"folders":
+	[
+		{
+			"path": "/home/peter/Dev/Euler"
+		}
+	],
+    "build_systems":
+    [
+        {
+            "name": "go",
+            "cmd": ["go", "run", "$file"],
+            "selector": "source.go"
+        }
+    ]
+}
