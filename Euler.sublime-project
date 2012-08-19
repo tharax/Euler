@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"folders":
 	[
 		{
@@ -14,3 +15,23 @@
         }
     ]
 }
+=======
+    "folders": [
+        {
+            "path": "/home/peter/Dev/Euler"
+        }
+    ], 
+    "settings": {
+        "go_project": true, 
+        "name": "Euler"
+    },
+    "build_systems":
+    [
+    	{
+    		"name": "go",
+    		"cmd": ["go run this $File"]
+    	}
+    ]
+
+}
+>>>>>>> 677443d8fdc028a1f804dad20a49d011e3f92af7

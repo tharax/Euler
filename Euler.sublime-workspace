@@ -15,13 +15,33 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "Euler.sublime-project",
+			"settings":
+			{
+				"buffer_size": 566,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 96.0,
 		"selected_items":
 		[
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git co",
+				"Git: Commit"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
 			[
 				"i",
 				"Package Control: Install Package"
@@ -105,6 +125,32 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Euler.sublime-project",
+					"settings":
+					{
+						"buffer_size": 566,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								516,
+								516
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -140,6 +186,10 @@
 	},
 	"menu_visible": true,
 	"output.exec":
+	{
+		"height": 305.0
+	},
+	"output.git":
 	{
 		"height": 112.0
 	},
