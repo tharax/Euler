@@ -1,0 +1,8 @@
+Solutions to ProjectEuler.net problems
+
+Satisfying my need to work on, and solve, complex algorithms. Some of the original answers have been revisited to improve algorithm runtimes.
+
+Long term my intention is to have one build file that compiles all the solutions into one file, which then offers to run all solutions.
+
+Until then, if you want to run a completed solution, "go run $file" should work
+
