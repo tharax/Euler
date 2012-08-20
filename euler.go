@@ -5,10 +5,10 @@ package main
 
 import (
 	"fmt"
-	"solutions/euler1"
+	// "solutions/euler1"
 )
 
 func main() {
 	fmt.Println("This is the master Euler Program.")
-	euler1.Problem1()
+	fmt.Println( /*euler1.*/ Problem1(0, 1000))
 }
