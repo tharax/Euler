@@ -10,5 +10,5 @@ import (
 
 func main() {
 	fmt.Println("This is the master Euler Program.")
-	fmt.Println( /*euler1.*/ Problem1(0, 1000))
+	// fmt.Println(Problem1(0, 1000))
 }

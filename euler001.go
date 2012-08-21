@@ -6,8 +6,8 @@ import (
 
 func main() {
 	// Testing
-	fmt.Println(Problem1(0, 0) == 0)
-	fmt.Println(Problem1(0, 10) == 23)
+	// fmt.Println(Problem1(0, 0) == 0)
+	// fmt.Println(Problem1(0, 10) == 23)
 
 	fmt.Println(Problem1(0, 1000))
 }
