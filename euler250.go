@@ -124,35 +124,132 @@ func main() {
 	// testArray := []int{1, 2, 3, 4, 5}
 	// countOfCombinations := countCombinations(testArray)
 	// fmt.Println(countOfCombinations)
-	goal := 6
-	combo := []int{goal}
-	amounts := []int{10, 10, 10, 10, 10, 10}
+	// goal := 6
+	// combo := []int{goal}
+	// amounts := []int{10, 10, 10, 10, 10, 10}
 
-	test := combinations(combo, amounts, goal) //5 is the number that its meant to add to.
-	fmt.Println(test)
+	// test := combinations(amounts, len(amounts)) //5 is the number that its meant to add to.
+	var m map[int]uint64
+	test := combinations(m, 30)
 	t3 := time.Now()
-	fmt.Printf("counting each combination took %v to run.\n", t3.Sub(t2))
+	fmt.Printf("\nCounting each combination took %v to run.\n", t3.Sub(t2))
+	fmt.Println("test =", test)
 
 }
 
-func combinations(combo, amounts []int, goal int) int {
+// 6 
+// 5+1			
+// 4+2
+// 4+1+1
+// 3+3			
+// 3+2+1			
+// 3+1+1+1		
+// 2+2+2		
+// 2+2+1+1
+// 2+1+1+1+1		
+// 1+1+1+1+1+1	
 
-	fmt.Println(amounts, len(amounts))
+// 11 ways to add 6. 7 ways to add 5. 5 ways to add 4. 3 ways to add 3. definitely a fib sequence.
 
-	for i := 0; i < goal-1; i++ {
-		if combo[0] > 1 { // Otherwise, if combo[0] == 1 we can't reduce any more.
-			combo[0]--
-			remainder := goal - combo[0]
-			for j := 0; j < len(combo)-1; j++ {
-				remainder += combo[j]
-				// fmt.Println(remainder)
-			}
-			combo = append(combo, remainder)
-		}
-		fmt.Println("combo", combo)
+// 4
+// 3+1
+// 2+2
+// 2+1+1
+// 1+1+1+1
+
+// 6 
+// 5+1			
+// 4+1+1
+// 3+1+1+1		
+// 2+1+1+1+1		
+// 1+1+1+1+1+1
+// 4+2
+// 3+3			
+// 3+2+1			
+// 2+2+2		
+// 2+2+1+1
+
+func combinations(m map[int]uint64, max int) uint64 {
+
+	m = make(map[int]uint64)
+	var maximum, total uint64
+	maximum = uint64(max)
+
+	fmt.Println("maximum =", maximum)
+	for i := 0; fib(i) < maximum; i++ {
+		m[i] = fib(i)
 	}
-	return 0
+	for i := 0; fib(i) < maximum; i++ {
+		if m[i]%2 == 0 {
+			fmt.Println(m[i])
+			total = total + m[i]
+		}
+	}
+	fmt.Println("total =", total)
+	return total
 }
+
+func fib(x int) uint64 {
+
+	if x < 1 {
+		return 1
+	}
+	return m[x-1] + m[x-2]
+}
+
+/*func combinations(amounts []int, goal int) []int {
+	combo := make([]int, 0)
+	combo[0] = goal
+
+	fmt.Println("start of combinations", combo, len(combo), amounts, len(amounts))
+
+	for i := goal - 1; i >= goal/2; i-- {
+		combo[0] = i
+		fmt.Println(combo[i+1:], ".")
+		a := combo[0:]
+		b := combinations(combo, goal-1)
+		combo = append(a, b...)
+		// for j := 0; j < i; j++ {
+		// 	fmt.Print(i)
+		// 	combo[j] = i
+		// 	combo[j+1] = goal - i
+		// 	if combo[j+1] > 1{
+		// 		fmt.Println(combo[j+1:], ".")
+		// 		a := combo[0:j+1]
+		// 		b := combinations(combo[j+1:], combo[j+1])
+		// 		combo = append(a, b...)
+		// 		fmt.Println("inner loop combo =", combo)
+		// 	}
+		// 	// : len(combo)-1] = combinations(combo[1:len(combo)-1], goal-j)
+		// 	fmt.Println("middle loop combo =", combo)
+		// }
+
+	}
+	fmt.Println("returning call of combinations combo =", combo)
+
+	// for i := goal - 1; i >= goal/2; i-- {
+
+	// 	// j := 0
+	// 	for j := 0; j < i; j++ {
+	// 		fmt.Print(i)
+	// 		combo[j] = i
+	// 		combo[j+1] = goal - i
+	// 		if combo[j+1] > 1{
+	// 			fmt.Println(combo[j+1:], ".")
+	// 			a := combo[0:j+1]
+	// 			b := combinations(combo[j+1:], combo[j+1])
+	// 			combo = append(a, b...)
+	// 			fmt.Println("inner loop combo =", combo)
+	// 		}
+	// 		// : len(combo)-1] = combinations(combo[1:len(combo)-1], goal-j)
+	// 		fmt.Println("middle loop combo =", combo)
+	// 	}
+
+	// }
+	// fmt.Println("returning call of combinations combo =", combo)
+
+	return combo
+}*/
 
 /* Takes a number and returns all the prime divisors, without repeating previous numbers.
  * eg. 10 returns [2 5], 100 returns [2 5], 8 returns [2].
