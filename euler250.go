@@ -130,7 +130,7 @@ func main() {
 
 	// test := combinations(amounts, len(amounts)) //5 is the number that its meant to add to.
 	var m map[int]uint64
-	test := combinations(m, 30)
+	test := combinations(m, 5)
 	t3 := time.Now()
 	fmt.Printf("\nCounting each combination took %v to run.\n", t3.Sub(t2))
 	fmt.Println("test =", test)
@@ -149,7 +149,8 @@ func main() {
 // 2+1+1+1+1		
 // 1+1+1+1+1+1	
 
-// 11 ways to add 6. 7 ways to add 5. 5 ways to add 4. 3 ways to add 3. definitely a fib sequence.
+// 11 ways to add 6. 7 ways to add 5. 5 ways to add 4. 3 ways to add 3. definitely a prime sequence.
+// dont know how that will come in handy yet.
 
 // 4
 // 3+1
@@ -176,10 +177,11 @@ func combinations(m map[int]uint64, max int) uint64 {
 	maximum = uint64(max)
 
 	fmt.Println("maximum =", maximum)
-	for i := 0; fib(i) < maximum; i++ {
-		m[i] = fib(i)
+	for i := 0; fib(i, m) < maximum; i++ {
+		m[i] = fib(i, m)
+		fmt.Println(m, m[i])
 	}
-	for i := 0; fib(i) < maximum; i++ {
+	for i := 0; fib(i, m) < maximum; i++ {
 		if m[i]%2 == 0 {
 			fmt.Println(m[i])
 			total = total + m[i]
@@ -189,7 +191,7 @@ func combinations(m map[int]uint64, max int) uint64 {
 	return total
 }
 
-func fib(x int) uint64 {
+func fib(x int, m map[int]uint64) uint64 {
 
 	if x < 1 {
 		return 1
