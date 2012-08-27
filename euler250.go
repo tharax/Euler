@@ -73,13 +73,8 @@ func Problem250(number int) {
 
 }
 
-// given an array, add all the numbers in the array that add to len array 
+// Given an array, add all the numbers in the array that add to len array 
 // eg. for [10, 10, 10, 10, 10]  is an array of len 5, remainders 0-4.
-// first we do array
-
-//ok so the pattern seems to be "take a number from the first one, shift it 
-// accross to the next, if that hasnt been done, calculate, if it has,
-// keep shifting until either its a new combo or its +1 on the end.
 
 // for array len 5
 
@@ -104,7 +99,11 @@ func Problem250(number int) {
 
 // 1. Exhaust all of the combos where array[0] is highest, before reducing array[0] by 1...
 // 2. All combos of len 1, then 2, then 3...
-// 3. A wierd mix of trying to spread all numbers (I wrote this one ages ago and could be wrong about the order)
+// 3. A wierd mix of trying to spread all numbers (I wrote this one ages ago and could be wrong about the order) (more notes below)
+
+// 3. ok so the pattern seems to be "take a number from the first one, shift it 
+// 3. accross to the next, if that hasnt been done, calculate, if it has,
+// 3. keep shifting until either its a new combo or its +1 on the end.
 
 // 6				6				6
 // 5+1				5+1				5+1
@@ -144,7 +143,7 @@ func arrayOfRemainders(x int) []int {
 func countEachRemainder(array []int) []int {
 	count := make([]int, 250)
 	for i := 0; i < len(array); i++ {
-		count[int(math.Abs(float64(array[i])))]++ // = count[n] + 1
+		count[int(math.Abs(float64(array[i])))]++
 	}
 	return count
 }
