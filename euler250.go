@@ -27,6 +27,8 @@
 
 // 21 August - Has it really been a month?
 
+// 27 August - I think this could be a breadth/depth first problem. you have the root level - 1 to n, then every level under each of those is the same until n = 1 where you return
+
 package main
 
 import (
@@ -37,22 +39,16 @@ import (
 
 func main() {
 
-	Problem250(250250)
+	Problem250(250250) // Modulus = 250 is also a special number, this should probably be abstracted to a variable.
 
-	// testArray := []int{1, 2, 3, 4, 5}
-	// countOfCombinations := countCombinations(testArray)
-	// fmt.Println(countOfCombinations)
-	// goal := 6
-	// combo := []int{goal}
-	// amounts := []int{10, 10, 10, 10, 10, 10}
+	// len(array) == 3, ten of each number - should get a result of 1100
+	// 10			=  10 {0}
+	// 10 * 10		= 100 {1, 2}
+	// 10 * 10 * 9	= 900 {1, 1, 1}
+	testAmounts := []int{10, 10, 10}
 
-	// test := combinations(amounts, len(amounts)) //5 is the number that its meant to add to.
-	// var m map[int]uint64
-	// test := combinations(m, 5)
-	// // t3 := time.Now()
-	// //fmt.Printf("\nCounting each combination took %v to run.\n", t3.Sub(t2))
-	// fmt.Println("test =", test)
-
+	combos := combinations(testAmounts)
+	fmt.Println(combos)
 }
 
 func Problem250(number int) {
@@ -116,6 +112,17 @@ func Problem250(number int) {
 // 2+2+1+1			2+2+1+1			3+2+1
 // 2+1+1+1+1		2+1+1+1+1		2+2+2
 // 1+1+1+1+1+1		1+1+1+1+1+1		2+2+1+1
+func combinations(x []int) int {
+	// len(array) == 3, ten of each number - should get a result of 1100
+	// 10			=  10 {0}
+	// 10 * 10		= 100 {1, 2}
+	// 10 * 10 * 9	= 900 {1, 1, 1}	
+	sum := 0
+	for i := 0; i < len(x); i++ {
+
+	}
+	return sum
+}
 
 // Returns the remainder of (x^x / 250)  
 func arrayOfRemainders(x int) []int {
@@ -140,6 +147,7 @@ func arrayOfRemainders(x int) []int {
 	return remainderSlice
 }
 
+// Returns the count of each remainder
 func countEachRemainder(array []int) []int {
 	count := make([]int, 250)
 	for i := 0; i < len(array); i++ {
