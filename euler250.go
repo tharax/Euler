@@ -36,91 +36,15 @@ import (
 )
 
 func main() {
-
-	// divisors := nonRepeatingDivisorsOf(250)
-	// fmt.Println(divisors)
-
-	// allDivisors := allDivisorsOf(250)
-	// fmt.Println(allDivisors)
-
-	// numbers := make([]int, 0)
-
-	// x, y := 250250, 250250
-	// for i := 1; i <= 250250; i++ {
-	// 	thisIsNotADivisor := true
-	// 	remainder := i % 250
-	// 	//fmt.Print(remainder, " ")
-	// 	for j := 0; j < len(allDivisors); j++ {
-	// 		if remainder % allDivisors[j] == 0 {
-	// 			remainder = remainder / allDivisors[j]
-	// 		} else {
-	// 			thisIsNotADivisor = false
-	// 		}
-	// 	}
-	// 	if thisIsNotADivisor {
-	// 		numbers = append(numbers, int(i))
-	// 		// fmt.Println(allDivisors, len(allDivisors), i)
-	// 	}
-	// }
-	// fmt.Println(numbers)
-
-	// t0 := time.Now()
-	// remainders := arrayOfRemainders(25)
-	// fmt.Println(remainders)
-	// t1 := time.Now()
-	// fmt.Printf("The call took %v to run.\n", t1.Sub(t0))
-
-	// t0 = time.Now()
-	// remainders = arrayOfRemainders(1000)
-	// fmt.Println(remainders)
-	// t1 = time.Now()
-	// fmt.Printf("The call took %v to run.\n", t1.Sub(t0))
-
-	// t0 = time.Now()
-	// remainders = arrayOfRemainders(10000)
-	// fmt.Println(remainders)
-	// t1 = time.Now()
-	// fmt.Printf("The call took %v to run.\n", t1.Sub(t0))
-
-	// t0 = time.Now()
-	// remainders = arrayOfRemainders(20000)
-	// fmt.Println(remainders)
-	// t1 = time.Now()
-	// fmt.Printf("The call took %v to run.\n", t1.Sub(t0))
-
-	// t0 = time.Now()
-	// remainders = arrayOfRemainders(40000)
-	// fmt.Println(remainders)
-	// t1 = time.Now()
-	// fmt.Printf("The call took %v to run.\n", t1.Sub(t0))
-
-	// t0 = time.Now()
-	// remainders = arrayOfRemainders(50000)
-	// fmt.Println(remainders)
-	// t1 = time.Now()
-	// fmt.Printf("The call took %v to run.\n", t1.Sub(t0))
-
-	// t0 = time.Now()
-	// remainders = arrayOfRemainders(100000)
-	// fmt.Println(remainders)
-	// t1 = time.Now()
-	// fmt.Printf("The call took %v to run.\n", t1.Sub(t0))
-
-	// t0 = time.Now()
-	// remainders = arrayOfRemainders(200000)
-	// fmt.Println(remainders)
-	// t1 = time.Now()
-	// fmt.Printf("The call took %v to run.\n", t1.Sub(t0))
-
-	// t0 := time.Now()
-	// remainders := arrayOfRemainders(250250)
-	// //fmt.Println(remainders)
-	// t1 := time.Now()
-	// fmt.Printf("creating the array took %v to run.\n", t1.Sub(t0))
-	// countForEachRemainder := countEachRemainder(remainders)
-	// fmt.Println(countForEachRemainder[0:4])
+	t0 := time.Now()
+	remainders := arrayOfRemainders(250250)
+	fmt.Println(remainders)
+	t1 := time.Now()
+	fmt.Printf("creating remainders took %v to run.\n", t1.Sub(t0))
+	countForEachRemainder := countEachRemainder(remainders)
+	fmt.Println(countForEachRemainder)
 	t2 := time.Now()
-	// fmt.Printf("counting each remainder took %v to run.\n", t2.Sub(t1))
+	fmt.Printf("counting each remainder took %v to run.\n", t2.Sub(t1))
 	// testArray := []int{1, 2, 3, 4, 5}
 	// countOfCombinations := countCombinations(testArray)
 	// fmt.Println(countOfCombinations)
@@ -137,6 +61,36 @@ func main() {
 
 }
 
+// given an array, add all the numbers in the array that add to len array 
+// eg. for [10, 10, 10, 10, 10]  is an array of len 5, remainders 0-4.
+// first we do array
+
+//ok so the pattern seems to be "take a number from the first one, shift it 
+// accross to the next, if that hasnt been done, calculate, if it has,
+// keep shifting until either its a new combo or its +1 on the end.
+
+// for array len 5
+
+// 5			10							   10
+// 4+1			10 * 10						  100
+// 3+2			10 * 10						  100
+// 3+1+1		10 * 10 *  9				  900
+// 2+2+1		10 *  9	* 10				  900
+// 2+1+1+1		10 * 10 *  9  *  8			 7200
+// 1+1+1+1+1	10 *  9 *  8  *  7 *  6		30240
+
+// 17 635 968 000 000 000 000
+
+// for array len 6
+
+// function(x) 
+// if x = 1, return the current count of x 
+// if else split into x-y and y
+// otherwise recursive call of this over y
+
+// 11 ways to add 6. 7 ways to add 5. 5 ways to add 4. 3 ways to add 3. definitely a prime sequence.
+// dont know how that will come in handy yet.
+
 // 6 
 // 5+1			
 // 4+2
@@ -149,14 +103,29 @@ func main() {
 // 2+1+1+1+1		
 // 1+1+1+1+1+1	
 
-// 11 ways to add 6. 7 ways to add 5. 5 ways to add 4. 3 ways to add 3. definitely a prime sequence.
-// dont know how that will come in handy yet.
+// 6 
+// 5+1			
+// 4+2
+// 4+1+1
+// 3+3			
+// 3+2+1			
+// 3+1+1+1		
+// 2+2+2		
+// 2+2+1+1
+// 2+1+1+1+1		
+// 1+1+1+1+1+1	
 
-// 4
-// 3+1
-// 2+2
-// 2+1+1
-// 1+1+1+1
+// 6
+// 5+1
+// 4+2
+// 3+3
+// 4+1+1
+// 3+2+1
+// 2+2+2
+// 3+1+1+1
+// 2+2+1+1
+// 2+1+1+1+1
+// 1+1+1+1+1+1
 
 // 6 
 // 5+1			
@@ -321,44 +290,6 @@ func countEachRemainder(array []int) []int {
 	return count
 }
 
-// given an array, add all the numbers in the array that add to len array 
-// eg. for [10, 10, 10, 10, 10]  is an array of len 5, remainders 0-4.
-// first we do array
-
-//ok so the pattern seems to be "take a number from the first one, shift it 
-// accross to the next, if that hasnt been done, calculate, if it has,
-// keep shifting until either its a new combo or its +1 on the end.
-
-// for array len 5
-
-// 5			10							   10
-// 4+1			10 * 10						  100
-// 3+2			10 * 10						  100
-// 3+1+1		10 * 10 *  9				  900
-// 2+2+1		10 *  9	* 10				  900
-// 2+1+1+1		10 * 10 *  9  *  8			 7200
-// 1+1+1+1+1	10 *  9 *  8  *  7 *  6		30240
-
-// 17 635 968 000 000 000 000
-
-// for array len 6
-
-// 6 
-// 5+1			
-// 4+2
-// 4+1+1
-// 3+3			
-// 3+2+1			
-// 3+1+1+1		
-// 2+2+2		
-// 2+2+1+1
-// 2+1+1+1+1		
-// 1+1+1+1+1+1	
-
-// function(x) 
-// if x = 1, return the current count of x 
-// if else split into x-y and y
-// otherwise recursive call of this over y
 
 // 
 // func countCombinations(array []int) int {
