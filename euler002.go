@@ -2,12 +2,15 @@ package main
 
 import "fmt"
 
-var m map[int]uint64
+var m map[int]int
 
 func main() {
-	m = make(map[int]uint64)
-	var maximum, total uint64
-	maximum = 4000000
+	Problem2(4000000)
+}
+
+func Problem2(maximum int) {
+	m = make(map[int]int)
+	var total int
 	fmt.Println("maximum =", maximum)
 	for i := 0; fib(i) < maximum; i++ {
 		m[i] = fib(i)
@@ -21,7 +24,7 @@ func main() {
 	fmt.Println("total =", total)
 }
 
-func fib(x int) uint64 {
+func fib(x int) int {
 	if x < 1 {
 		return 1
 	}
