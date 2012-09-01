@@ -70,7 +70,7 @@ func Problem250(number int) {
 	startTime = time.Now()
 	testAmounts := 250250 // []int{10, 10, 10}
 	combos := combinations(testAmounts)
-	fmt.Println(combos[250249])
+	fmt.Println(combos[len(combos) - 1])
 	endTime = time.Now()
 	fmt.Printf("Creating every combination took %v to run.\n\n", endTime.Sub(startTime))	
 
@@ -120,26 +120,57 @@ func Problem250(number int) {
 // 2+1+1+1+1		2+1+1+1+1		2+2+2
 // 1+1+1+1+1+1		1+1+1+1+1+1		2+2+1+1
 
-func combinations(x int) map[int]uint64 {
-	sum := createFibSequence(x) // len(array) == 3, ten of each number - should get a result of 1100
-	// 10			=  10 {0}
-	// 10 * 10		= 100 {1, 2}
-	// 10 * 10 * 9	= 900 {1, 1, 1}
+func combinations(x int) []uint64 {
+	largeNumber := uint64(999999999)
+	s := makePrimeSlice(1, largeNumber)
+	//fmt.Println(s)
 
-	// {3, 3, 3}
-	// 3+1+9+1
-	// 14!
-	// sum := make([,]int, 0)
-	// if x <= 2 {
-	//  sum = append(sum, [1,1])	
-	// }
-	//sum := 0
+	if len(s) == 10001 {
+		fmt.Println("10001 prime =", s[len(s) - 1])
+	} else {
+		fmt.Println("slice length = ", len(s))
+		fmt.Println("highest prime =", s[len(s) - 1])
+	}
 
-	// for i := 0; i <= x; i++ {
-	// 	fmt.Println(i, x-i)
-	// }
-	//fmt.Print(...)
-	return sum
+	var sum uint64
+	for i, _ := range s {
+		sum += s[i]
+	}
+	fmt.Println("sum of all the primes =", sum)
+
+	return s
+}
+
+func makePrimeSlice(lowerBottom, upperBottom uint64) []uint64{
+	var isPrime bool = true
+	var primeSlice = make([]uint64, 0)
+K:	for i := lowerBottom; i <= upperBottom; i++ {
+		isPrime = true		
+L:		for j := i-lowerBottom; j>lowerBottom; j--{
+			if i % j == 0 {
+				isPrime = false
+				break L
+			}
+		}
+		if isPrime && i > 1 {
+			//for ;upperBottom % i == 0; {
+			//	upperBottom = upperBottom / i
+				primeSlice = append(primeSlice, i)
+				//fmt.Println(i)
+			//	if upperBottom == i {
+					// break K
+			//	}
+			//}
+		}
+
+		if len(primeSlice) == 250 {
+			fmt.Println(primeSlice[len(primeSlice) - 1])
+			break K
+		}
+
+	}
+	fmt.Println("Slice created")
+	return primeSlice
 }
 
 func createFibSequence(maximum int) map[int]uint64 {
