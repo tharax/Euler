@@ -13,31 +13,20 @@ package main
 import "fmt"
 
 func main() {
-	largeNumber := uint64(250)
-	s := makePrimeSlice(1, largeNumber)
-	fmt.Println("Slice is made")
-	fmt.Println(s)
-
-	/*for i := range s  {
-		if s[i] != 0 {
-			for ;largeNumber % s[i] == 0; {
-				largeNumber = largeNumber / s[i]
-				fmt.Printf("%d ",s[i])
-			}
-		}
-	}*/
+	startTime = time.Now()
+	fmt.Println(Problem3(1, 600851475143))
+	endTime = time.Now()
+	fmt.Printf("Slice took %v to make.\n\n", endTime.Sub(startTime))
 }
 
-func makePrimeSlice(lowerBottom, upperBottom uint64) []uint64 {
-	var isPrime bool = true
-	var primeSlice = make([]uint64, 0)
-	//var unusedPrimes = make([]uint64, 0)
-	var i, j uint64
+func Problem3(lowerBottom, upperBottom uint64) []uint64 {
+	isPrime := true
+	primeSlice := make([]uint64, 0)
 K:
-	for i = lowerBottom; i <= upperBottom; i++ {
+	for i := lowerBottom; i <= upperBottom; i++ {
 		isPrime = true
 	L:
-		for j = i - lowerBottom; j > lowerBottom; j-- {
+		for j := i - lowerBottom; j > lowerBottom; j-- {
 			if i%j == 0 {
 				isPrime = false
 				break L
