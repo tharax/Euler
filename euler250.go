@@ -45,10 +45,10 @@ func main() {
 	// 10			=  10 {0}
 	// 10 * 10		= 100 {1, 2}
 	// 10 * 10 * 9	= 900 {1, 1, 1}
-	testAmounts := []int{10, 10, 10}
+	// testAmounts := 250 // []int{10, 10, 10}
 
-	combos := combinations(testAmounts)
-	fmt.Println(combos)
+	// combos := combinations(testAmounts)
+	// fmt.Println(combos)
 }
 
 func Problem250(number int) {
@@ -66,6 +66,13 @@ func Problem250(number int) {
 	fmt.Println(countForEachRemainder)
 	endTime = time.Now()
 	fmt.Printf("Counting each remainder took %v to run.\n\n", endTime.Sub(startTime))
+
+	startTime = time.Now()
+	testAmounts := 250250 // []int{10, 10, 10}
+	combos := combinations(testAmounts)
+	fmt.Println(combos[250249])
+	endTime = time.Now()
+	fmt.Printf("Creating every combination took %v to run.\n\n", endTime.Sub(startTime))	
 
 }
 
@@ -101,7 +108,7 @@ func Problem250(number int) {
 // 3. accross to the next, if that hasnt been done, calculate, if it has,
 // 3. keep shifting until either its a new combo or its +1 on the end.
 
-// 6				6				6
+// 6				6				6 
 // 5+1				5+1				5+1
 // 4+2				4+2				4+1+1
 // 4+1+1			3+3				3+1+1+1
@@ -112,16 +119,42 @@ func Problem250(number int) {
 // 2+2+1+1			2+2+1+1			3+2+1
 // 2+1+1+1+1		2+1+1+1+1		2+2+2
 // 1+1+1+1+1+1		1+1+1+1+1+1		2+2+1+1
-func combinations(x []int) int {
-	// len(array) == 3, ten of each number - should get a result of 1100
+
+func combinations(x int) map[int]uint64 {
+	sum := createFibSequence(x) // len(array) == 3, ten of each number - should get a result of 1100
 	// 10			=  10 {0}
 	// 10 * 10		= 100 {1, 2}
-	// 10 * 10 * 9	= 900 {1, 1, 1}	
-	sum := 0
-	for i := 0; i < len(x); i++ {
+	// 10 * 10 * 9	= 900 {1, 1, 1}
 
-	}
+	// {3, 3, 3}
+	// 3+1+9+1
+	// 14!
+	// sum := make([,]int, 0)
+	// if x <= 2 {
+	//  sum = append(sum, [1,1])	
+	// }
+	//sum := 0
+
+	// for i := 0; i <= x; i++ {
+	// 	fmt.Println(i, x-i)
+	// }
+	//fmt.Print(...)
 	return sum
+}
+
+func createFibSequence(maximum int) map[int]uint64 {
+	m := make(map[int]uint64, maximum)
+	for i := 0; i < maximum; i++ {
+		m[i] = fib(i, m)
+	}
+	return m
+}
+
+func fib(x int, m map[int]uint64) uint64 {
+	if x < 1 {
+		return 1
+	}
+	return m[x-1] + m[x-2]
 }
 
 // Returns the remainder of (x^x / 250)  
