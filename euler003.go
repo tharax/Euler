@@ -10,12 +10,15 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	startTime = time.Now()
+	startTime := time.Now()
 	fmt.Println(Problem3(1, 600851475143))
-	endTime = time.Now()
+	endTime := time.Now()
 	fmt.Printf("Slice took %v to make.\n\n", endTime.Sub(startTime))
 }
 
