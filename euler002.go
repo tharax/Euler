@@ -13,7 +13,7 @@ func Problem2(maximum int) {
 	for i := 0; fib(i, m) < maximum; i++ {
 		if m[i]%2 == 0 {
 			fmt.Println(m[i])
-			total = total + m[i]
+			total += m[i]
 		}
 	}
 	fmt.Println("total =", total)
