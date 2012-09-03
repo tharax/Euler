@@ -91,50 +91,6 @@ func Problem250(number int) {
 
 }
 
-// Given an array, add all the numbers in the array that add to len array 
-// eg. for [10, 10, 10, 10, 10]  is an array of len 5, remainders 0-4.
-
-// for array len 5
-
-// 5			10							   10
-// 4+1			10 * 10						  100
-// 3+2			10 * 10						  100
-// 3+1+1		10 * 10 *  9				  900
-// 2+2+1		10 *  9	* 10				  900
-// 2+1+1+1		10 * 10 *  9  *  8			 7200
-// 1+1+1+1+1	10 *  9 *  8  *  7 *  6		30240
-
-// 17 635 968 000 000 000 000
-
-// function(x) 
-// if x = 1, return the current count of x 
-// if else split into x-y and y
-// otherwise recursive call of this over y
-
-// 11 ways to add 6. 7 ways to add 5. 5 ways to add 4. 3 ways to add 3. definitely a prime sequence.
-// dont know how that will come in handy yet.
-// len(array) == 6. There are at least 3 algorithms that I can see, listed below.
-
-// 1. Exhaust all of the combos where array[0] is highest, before reducing array[0] by 1...
-// 2. All combos of len 1, then 2, then 3...
-// 3. A wierd mix of trying to spread all numbers (I wrote this one ages ago and could be wrong about the order) (more notes below)
-
-// 3. ok so the pattern seems to be "take a number from the first one, shift it 
-// 3. accross to the next, if that hasnt been done, calculate, if it has,
-// 3. keep shifting until either its a new combo or its +1 on the end.
-
-// 6				6				6 
-// 5+1				5+1				5+1
-// 4+2				4+2				4+1+1
-// 4+1+1			3+3				3+1+1+1
-// 3+3				4+1+1			2+1+1+1+1
-// 3+2+1			3+2+1			1+1+1+1+1+1
-// 3+1+1+1			2+2+2			4+2
-// 2+2+2			3+1+1+1			3+3
-// 2+2+1+1			2+2+1+1			3+2+1
-// 2+1+1+1+1		2+1+1+1+1		2+2+2
-// 1+1+1+1+1+1		1+1+1+1+1+1		2+2+1+1
-
 func combinations(x int) []uint64 {
 	s := makePrimeSlice(1, 999999999)
 
