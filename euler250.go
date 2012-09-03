@@ -76,7 +76,7 @@ func Problem250(number, divisor int) {
 	//Returns all the combinations that add up to 
 	startTime = time.Now()
 	combos := combinations(divisor)
-	fmt.Println(combos])
+	fmt.Println(combos)
 	endTime = time.Now()
 	fmt.Printf("Creating every combination took %v to run.\n\n", endTime.Sub(startTime))
 
