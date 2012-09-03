@@ -31,14 +31,16 @@
 
 // 3 September - 250 Groupings
 
-// Number | Count | Combinations
+// Length | Count | Combinations
+//      1 |     1 | 0
+//      2 |     2 | 0, 1+1
+//      3 |     4 | 0, 2+2+2, 2+1, 1+1+1
+//      4 |     7 | 0, 3+3+3+3, 3+3+2, 3+1, 2+2, 2+1+1, 1+1+1+1
+//      5 |    15 | 0, 4+4+4+4+4, 4+4+4+3, 4+4+2, 4+1, 4+3+3, 4+2+2+2, 3+3+3+1, 3+3+3+3+3, 3+2, 3+1+1, 2+2+2+2+2, 2+2+1, 2+1+1+1, 1+1+1+1+1
+//      6 |    19 | 0, 5+5+5+5+5+5, 5+5+5+5+4,5+5+5+5+4,5+5+5+3, 5+3+2+2, 5+5+2, 5+1,4+4+3+1, 4+4+4, 4+1+1, 4+2, 3+3, 2+2+2, 3+2+1, 1+1+1, 2+2+1+1, 2+1+1+1+1, 1+1+1+1+1+1
+//      7 |    59 |
 
-//      0 |     1 | 0
-//      1 |     1 | 1
-//      2 |     2 | 2, 1+1
-//      3 |     4 | 3, 2+2+2, 2+1, 1+1+1
-//      4 |     7 | 4, 3+3+3+3, 3+3+2, 3+1, 2+2, 2+1+1, 1+1+1+1
-//      5 |    15 | 5, 4+4+4+4+4, 4+4+4+3, 4+4+2, 4+1, 3+3+3+1, 4+3+3, 4+2+2+2, 3+3+3+3+3, 3+2, 3+1+1, 2+2+2+2+2, 2+2+1, 2+1+1+1, 1+1+1+1+1
+
 
 // My expectation is that the algorithm is the sum of the previous amounts:
 // combos 0 = 1
@@ -53,25 +55,14 @@ import (
 )
 
 func main() {
-
-	Problem250(250250) // Modulus = 250 is also a special number, this should probably be abstracted to a variable.
-
-	// len(array) == 3, ten of each number - should get a result of 1100
-	// 10			=  10 {0}
-	// 10 * 10		= 100 {1, 2}
-	// 10 * 10 * 9	= 900 {1, 1, 1}
-	// testAmounts := 250 // []int{10, 10, 10}
-
-	// combos := combinations(testAmounts)
-	// fmt.Println(combos)
+	Problem250(250250, 250)
 }
 
-func Problem250(number int) {
+func Problem250(number, divisor int) {
 
 	// Calculate the remainder for each number in the set
 	startTime := time.Now()
 	remainders := arrayOfRemainders(number)
-	// fmt.Println(remainders)
 	endTime := time.Now()
 	fmt.Printf("Creating remainder array took %v to run.\n\n", endTime.Sub(startTime))
 
@@ -82,26 +73,28 @@ func Problem250(number int) {
 	endTime = time.Now()
 	fmt.Printf("Counting each remainder took %v to run.\n\n", endTime.Sub(startTime))
 
+	//Returns all the combinations that add up to 
 	startTime = time.Now()
-	testAmounts := 250250 // []int{10, 10, 10}
-	combos := combinations(testAmounts)
-	fmt.Println(combos[len(combos)-1])
+	combos := combinations(divisor)
+	fmt.Println(combos])
 	endTime = time.Now()
 	fmt.Printf("Creating every combination took %v to run.\n\n", endTime.Sub(startTime))
 
 }
 
-func combinations(x int) []uint64 {
-	s := makePrimeSlice(1, 999999999)
+func combinations(x int) map[int]uint64 {
+	s := createComboSequence(x)
 
 	fmt.Println("slice length = ", len(s))
-	fmt.Println("highest prime =", s[len(s)-1])
+	fmt.Println("maximum uint64 = 18446744073709551615")
+	fmt.Println("highest prime  =", s[len(s)-1])
 
 	var sum uint64
 	for i, _ := range s {
 		sum += s[i]
+		fmt.Println("sum=", sum)
 	}
-	fmt.Println("sum of all the primes =", sum)
+	fmt.Println("sum of all the=", sum)
 
 	return s
 }
@@ -120,14 +113,7 @@ K:
 			}
 		}
 		if isPrime && i > 1 {
-			//for ;upperBottom % i == 0; {
-			//	upperBottom = upperBottom / i
 			primeSlice = append(primeSlice, i)
-			//fmt.Println(i)
-			//	if upperBottom == i {
-			// break K
-			//	}
-			//}
 		}
 
 		if len(primeSlice) == 250 {
@@ -138,6 +124,21 @@ K:
 	}
 	fmt.Println("Slice created")
 	return primeSlice
+}
+
+func createComboSequence(maximum int) map[int]uint64 {
+	m := make(map[int]uint64, maximum)
+	for i := 0; i < maximum; i++ {
+		m[i] = combo(i, m)
+	}
+	return m
+}
+
+func combo(x int, m map[int]uint64) uint64 {
+	if x < 1 {
+		return 1
+	}
+	return m[x-1] + m[x-2]
 }
 
 func createFibSequence(maximum int) map[int]uint64 {
