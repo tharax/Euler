@@ -29,6 +29,21 @@
 
 // 27 August - I think this could be a breadth/depth first problem. you have the root level - 1 to n, then every level under each of those is the same until n = 1 where you return
 
+// 3 September - 250 Groupings
+
+// Number | Count | Combinations
+
+//      0 |     1 | 0
+//      1 |     1 | 1
+//      2 |     2 | 2, 1+1
+//      3 |     4 | 3, 2+2+2, 2+1, 1+1+1
+//      4 |     7 | 4, 3+3+3+3, 3+3+2, 3+1, 2+2, 2+1+1, 1+1+1+1
+//      5 |    15 | 5, 4+4+4+4+4, 4+4+4+3, 4+4+2, 4+1, 3+3+3+1, 4+3+3, 4+2+2+2, 3+3+3+3+3, 3+2, 3+1+1, 2+2+2+2+2, 2+2+1, 2+1+1+1, 1+1+1+1+1
+
+// My expectation is that the algorithm is the sum of the previous amounts:
+// combos 0 = 1
+// combos n = sum of combos n-1 to 0
+
 package main
 
 import (
@@ -70,9 +85,9 @@ func Problem250(number int) {
 	startTime = time.Now()
 	testAmounts := 250250 // []int{10, 10, 10}
 	combos := combinations(testAmounts)
-	fmt.Println(combos[len(combos) - 1])
+	fmt.Println(combos[len(combos)-1])
 	endTime = time.Now()
-	fmt.Printf("Creating every combination took %v to run.\n\n", endTime.Sub(startTime))	
+	fmt.Printf("Creating every combination took %v to run.\n\n", endTime.Sub(startTime))
 
 }
 
@@ -121,16 +136,10 @@ func Problem250(number int) {
 // 1+1+1+1+1+1		1+1+1+1+1+1		2+2+1+1
 
 func combinations(x int) []uint64 {
-	largeNumber := uint64(999999999)
-	s := makePrimeSlice(1, largeNumber)
-	//fmt.Println(s)
+	s := makePrimeSlice(1, 999999999)
 
-	if len(s) == 10001 {
-		fmt.Println("10001 prime =", s[len(s) - 1])
-	} else {
-		fmt.Println("slice length = ", len(s))
-		fmt.Println("highest prime =", s[len(s) - 1])
-	}
+	fmt.Println("slice length = ", len(s))
+	fmt.Println("highest prime =", s[len(s)-1])
 
 	var sum uint64
 	for i, _ := range s {
@@ -141,13 +150,15 @@ func combinations(x int) []uint64 {
 	return s
 }
 
-func makePrimeSlice(lowerBottom, upperBottom uint64) []uint64{
+func makePrimeSlice(lowerBottom, upperBottom uint64) []uint64 {
 	var isPrime bool = true
 	var primeSlice = make([]uint64, 0)
-K:	for i := lowerBottom; i <= upperBottom; i++ {
-		isPrime = true		
-L:		for j := i-lowerBottom; j>lowerBottom; j--{
-			if i % j == 0 {
+K:
+	for i := lowerBottom; i <= upperBottom; i++ {
+		isPrime = true
+	L:
+		for j := i - lowerBottom; j > lowerBottom; j-- {
+			if i%j == 0 {
 				isPrime = false
 				break L
 			}
@@ -155,16 +166,16 @@ L:		for j := i-lowerBottom; j>lowerBottom; j--{
 		if isPrime && i > 1 {
 			//for ;upperBottom % i == 0; {
 			//	upperBottom = upperBottom / i
-				primeSlice = append(primeSlice, i)
-				//fmt.Println(i)
+			primeSlice = append(primeSlice, i)
+			//fmt.Println(i)
 			//	if upperBottom == i {
-					// break K
+			// break K
 			//	}
 			//}
 		}
 
 		if len(primeSlice) == 250 {
-			fmt.Println(primeSlice[len(primeSlice) - 1])
+			fmt.Println(primeSlice[len(primeSlice)-1])
 			break K
 		}
 
