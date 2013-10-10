@@ -14,16 +14,16 @@
 
 // the theory is, for any number in the set, it has a set number of primes as it's Lowest common
 // divisors. and for each time you multiply it, you multiply the set of prime divisors.
-// so for the specific example of 250, i just have to figure out if n is divisble by 2 or 5, 
+// so for the specific example of 250, i just have to figure out if n is divisble by 2 or 5,
 // and if that is the case, is n > 3 (because there are 3 "5"s in the 250.)
 
 // this is going to give me all the numbers in the super set that % 250 == 0
 
-// ahh you say, the problem is bigger than this - perhaps, but this is my starting block. 
+// ahh you say, the problem is bigger than this - perhaps, but this is my starting block.
 
-// 25 july - ok so the trick is possibly something like "multiply by the number, divide by 250, 
+// 25 july - ok so the trick is possibly something like "multiply by the number, divide by 250,
 // repeat y times (x^y)
-// 
+//
 
 // 21 August - Has it really been a month?
 
@@ -46,6 +46,28 @@
 
 // So far this problem has a solution for the first two numbers.
 
+/* 10 Oct 2013 New Approach.
+
+There are 250250 numbers in the biggest set. I can reduce them to their remainders.
+
+Then, I have a table of remainders numbers (some duplicates, obviously)
+so for example, {1, 4, 27, 256} will be the subset containing the first 4 numbers - {1^1, 2^2, 3^3, 4^4}
+
+Remainder	Occurences
+1		1
+4		1
+6		1
+27		1
+
+I can keep doing this until the occurences column adds to 250250.
+
+then, I think I have in part reduced the problem. I do the math for all that add up to 250 (1+249, 1+1+248, 2+248, etc.)
+then i will again be doing set theory. i might need to pull out some old textbooks for that bit. but i can find out how many unique combos I can build, then I can rock out. I think there are 250! ways to make 250.
+
+
+HAHAHAHA ok so apparently this is the process i already tried.
+*/
+
 package main
 
 import (
@@ -55,32 +77,101 @@ import (
 )
 
 func main() {
+	// countOccurences(10)
 	Problem250(250250, 250)
 }
 
 func Problem250(number, divisor int) {
 
-	// Calculate the remainder for each number in the set
+	// Calculate the remainder for each number in the set, raised to itself, divided by divisor
 	// startTime := time.Now()
-	remainders := arrayOfRemainders(number)
+	remainders := countOfEachRemainder(number, divisor)
+	fmt.Println(remainders)
 	// endTime := time.Now()
 	// fmt.Printf("Creating remainder array took %v to run.\n\n", endTime.Sub(startTime))
+	// fmt.Println(remainders)
+	// fmt.Println(len(remainders))
+	// fmt.Println(remainder(number, divisor))
 
 	// Count each remainder, returns a smaller set (of length 250)
 	// startTime = time.Now()
-	countForEachRemainder := countEachRemainder(remainders)
+	// countForEachRemainder := countEachRemainder(remainders)
 	// fmt.Println(countForEachRemainder)
 	// endTime = time.Now()
 	// fmt.Printf("Counting each remainder took %v to run.\n\n", endTime.Sub(startTime))
 
-	//Returns all the combinations that add up to 
+	//Returns all the combinations that add up to
 	// startTime = time.Now()
-	fmt.Println(countForEachRemainder[0:2])
-	combos := combinations(divisor, countForEachRemainder[0:2])
-	fmt.Println(combos)
+	// fmt.Println(countForEachRemainder[0:2])
+	// combos := combinations(divisor, countForEachRemainder[0:2])
+	// fmt.Println(combos)
 	// endTime = time.Now()
 	// fmt.Printf("Creating every combination took %v to run.\n\n", endTime.Sub(startTime))
 
+}
+
+// Return array of length divisor, where each value is the count a remainder appears.
+func countOfEachRemainder(number, divisor int) []int {
+	remainders := arrayOfRemainders(number, divisor)
+	remain := make([]int, divisor)
+	for _, value := range remainders {
+		remain[value] += 1
+	}
+	return remain
+}
+
+// Returns an array of number^number % divisor
+func arrayOfRemainders(number, divisor int) []int {
+	remainderSlice := make([]int, 0)
+	for i := 1; i <= number; i++ {
+		remainderSlice = append(remainderSlice, remainder(i, divisor))
+	}
+	return remainderSlice
+}
+
+// returns number^number % divisor
+func remainder(number, divisor int) int {
+	total, remainderChain := number, make([]int, 0)
+	total = total % divisor
+	remainderChain = append(remainderChain, total)
+J:
+	for i := 1; i < number; i++ {
+		total = (total * number) % divisor
+
+		if checkRemainderAlreadyFound(remainderChain, total) {
+			total = remainderChain[(number-1)%len(remainderChain)]
+			break J
+		}
+		remainderChain = append(remainderChain, total)
+		// fmt.Println("number", number, "len(remainderChain)", len(remainderChain), "total", total)
+	}
+	// fmt.Println(number, total)
+	return total
+}
+
+// If total already exists in remainderChain, return true
+func checkRemainderAlreadyFound(remainderChain []int, total int) bool {
+	for k := 0; k < len(remainderChain); k++ {
+		if total == remainderChain[k] {
+			// fmt.Println("len(remainderChain)", len(remainderChain), "total", total, "k", k)
+			// fmt.Println("remainderChain", remainderChain)
+			return true
+		}
+	}
+	return false
+}
+
+func countOccurences(high int) {
+	for start := 1; start <= high; start++ {
+		number := start
+		for low := 1; low < start; low++ {
+			number = number * start
+			number = number % 250
+			// fmt.Println("working", start, " ", number)
+		}
+
+		//fmt.Println(start, " ", number)
+	}
 }
 
 func combinations(x int, slice []int) map[int]uint64 {
@@ -88,7 +179,7 @@ func combinations(x int, slice []int) map[int]uint64 {
 	var number uint64
 	number = uint64(slice[0]) * uint64(slice[1]) * uint64(slice[1]-1)
 	fmt.Println(slice[0], slice[1], (slice[1] - 1), "number=", number)
-	// fmt.Println("slice length = ", len(s))
+	fmt.Println("slice length = ", len(s))
 	// fmt.Println("maximum uint64 = 18446744073709551615")
 	// fmt.Println("highest prime  =", s[len(s)-1])
 
@@ -149,29 +240,6 @@ func fib(x int, m map[int]uint64) uint64 {
 		return 1
 	}
 	return m[x-1] + m[x-2]
-}
-
-// Returns the remainder of (x^x / 250)  
-func arrayOfRemainders(x int) []int {
-	remainderSlice := make([]int, 0)
-	for i := 1; i <= x; i++ {
-		steps, remainder := make([]int, 0), i
-	J:
-		for j := 1; j < i; j++ {
-			remainder = remainder * i % 250
-			// steps = append(steps, remainder)
-			for k := 0; k < len(steps); k++ {
-				if remainder == steps[k] {
-					remainder = steps[i%len(steps)]
-					// fmt.Println("i", i, "j", j, "k", k,  "remainder", remainder)
-					break J
-				}
-			}
-			steps = append(steps, remainder)
-		}
-		remainderSlice = append(remainderSlice, remainder)
-	}
-	return remainderSlice
 }
 
 // Returns the count of each remainder
